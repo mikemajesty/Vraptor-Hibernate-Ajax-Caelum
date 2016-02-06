@@ -13,14 +13,15 @@ import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.config.ApplicationConfiguration;
+import br.com.dao.ProdutoDao;
 import br.com.entities.Produto;
+import br.com.infra.SessionCreator;
 
 @Controller
 public class IndexController {
 
 	private final Result result;
-	SessionFactory factory = new AnnotationConfiguration().configure("hibernate.cfg.xml").buildSessionFactory();
-	Session session = factory.openSession();
+	private ProdutoDao produtoDao;
 
 	protected IndexController() {
 		this(null);
@@ -29,45 +30,37 @@ public class IndexController {
 	@Inject
 	public IndexController(Result result) {
 		
-		session.beginTransaction();
 		this.result = result;
-
-		Produto produto = new Produto();
+		Produto produto = getProduto();
+		
+		ProdutoDao produtoDao = new ProdutoDao();
+		produtoDao.salvar(produto);
+		
+		Produto prod = produtoDao.getProdutoBiID(1);
+		prod.setNome("Malha de cota");
+		produtoDao.alterar(prod);
+		
+		produtoDao.delete(prod.getProdutoID());
+		
+	}
+    private Produto getProduto() {
+    	Produto produto =new Produto();
 		produto.setNome("Prateleira");
 		produto.setDescricao("Uma prateleira para colocar livros");
 		produto.setPreco(35.90);
-		
-		session.save(produto);
-		
-		session.getTransaction().commit();
-
-		session.close();
-		
-		alterarProduto();
-		removeProduto();
+		return produto;
 	}
-    private void alterarProduto(){
-    	
-    	Session session = factory.openSession();
-    	
-    	
-    	Produto produto = (Produto) session.load(Produto.class, 1);
-    
-    	Transaction tx = session.beginTransaction();
-    	produto.setPreco(42.50);
-    	session.update(produto);
-    	tx.commit();
-    }
-    private void removeProduto(){
-    	
-    	Session session = factory.openSession();
-    	
-    	Produto produto = (Produto) session.load(Produto.class, 1);
-    
-    	Transaction tx = session.beginTransaction();
-    	session.delete(produto);
-    	tx.commit();
-    }
+
+	@Path("/olamundo")
+	public Produto olaMundo(){
+		Produto produto =new Produto();
+		result.include("olaMundo", "Olá Mundo");
+		produto.setNome("Prateleira");
+		produto.setDescricao("Uma prateleira para colocar livros");
+		produto.setPreco(35.90);
+		return produto;
+	}
+   
     @Path("/")
 	public void index() {
 		result.include("variable", "VRaptor!");
