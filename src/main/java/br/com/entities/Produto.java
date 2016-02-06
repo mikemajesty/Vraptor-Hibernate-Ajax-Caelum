@@ -11,6 +11,28 @@ public class Produto {
 	@Id
 	@GeneratedValue
 	private int produtoID;
+	private String nome;
+	private String descricao;
+	private Double preco;
+	
+	
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public Double getPreco() {
+		return preco;
+	}
+
+	public void setPreco(Double preco) {
+		this.preco = preco;
+	}
+
+	
 	
 	public int getProdutoID() {
 		return produtoID;
@@ -28,5 +50,5 @@ public class Produto {
 		this.nome = nome;
 	}
 
-	private String nome;
+	
 }
