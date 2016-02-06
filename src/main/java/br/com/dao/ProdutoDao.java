@@ -1,10 +1,16 @@
 package br.com.dao;
 
+import java.util.List;
+
+import javax.enterprise.context.RequestScoped;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import br.com.entities.Produto;
 import br.com.infra.SessionCreator;
+
+@RequestScoped
 
 public class ProdutoDao {
 
@@ -23,6 +29,10 @@ public class ProdutoDao {
 
 	public Produto getProdutoBiID(int id) {
 		return (Produto) session.load(Produto.class, id);
+	}
+	public List<Produto> listaTudo() {
+		List<Produto> prodList = session.createCriteria(Produto.class).list();
+		return prodList;
 	}
 
 	public void alterar(Produto produto) {

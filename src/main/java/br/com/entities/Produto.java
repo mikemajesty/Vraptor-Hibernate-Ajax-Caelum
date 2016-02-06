@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 @Entity
 public class Produto {
 
+   
 	@Id
 	@GeneratedValue
 	private int produtoID;
