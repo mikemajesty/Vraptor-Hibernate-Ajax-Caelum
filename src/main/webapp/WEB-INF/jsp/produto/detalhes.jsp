@@ -19,8 +19,8 @@ ${produto.descricao }
 		<label for="preco">Preço:</label> <input id="preco"
 			disabled="disabled" type="text" value="${produto.preco }" />
 		<a href="listar">Sair</a>
-		<a href="editar?id=${produto.produtoID }">Editar</a>
-		<a href="deletar?id=${produto.produtoID }">Deletar</a>
+		<a href="editar-${produto.produtoID }">Editar</a>
+		<a href="deletar-${produto.produtoID }">Deletar</a>
 	</fieldset>
 </body>
 </html>

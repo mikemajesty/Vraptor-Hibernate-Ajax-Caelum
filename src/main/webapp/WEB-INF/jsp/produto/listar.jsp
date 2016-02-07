@@ -26,9 +26,9 @@
 					<td>${produto.nome }</td>
 					<td>${produto.descricao }</td>
 					<td>${produto.preco }</td>
-					<td><a href="editar?id=${produto.produtoID}">Editar</a></td>
-					<td><a href="deletar?id=${produto.produtoID}">Deletar</a></td>
-					<td><a href="detalhes?id=${produto.produtoID}">Detalhes</a></td>
+					<td><a href="editar-${produto.produtoID}">Editar</a></td>
+					<td><a href="deletar-${produto.produtoID}">Deletar</a></td>
+					<td><a href="detalhes-${produto.produtoID}">Detalhes</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>

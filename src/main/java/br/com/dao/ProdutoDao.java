@@ -10,7 +10,6 @@ import org.hibernate.Transaction;
 import br.com.entities.Produto;
 import br.com.infra.SessionCreator;
 
-
 public class ProdutoDao {
 
 	private Session session;
@@ -38,8 +37,9 @@ public class ProdutoDao {
 	}
 
 	public void alterar(Produto produto) {	
-		
-		Transaction tx = session.beginTransaction();
+		session.clear();
+		session.flush();
+		Transaction tx = session.beginTransaction();		
 		session.update(produto);
 		tx.commit();
 		

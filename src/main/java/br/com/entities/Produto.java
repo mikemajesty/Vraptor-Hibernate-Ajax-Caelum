@@ -1,6 +1,7 @@
 package br.com.entities;
 
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Entity;
 import javax.validation.constraints.Min;
@@ -13,7 +14,7 @@ public class Produto {
 
    
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int produtoID;
 	@NotNull
 	@Length(min=3)

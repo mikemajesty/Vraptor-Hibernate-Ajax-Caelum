@@ -8,17 +8,22 @@
 </head>
 <body>
 	<form action="editar" method="Post">
+		<c:forEach var="error" items="${errors}">
+			<div style="background-color: red;">
+				${error.category} - ${error.message} <br />
+			</div>
+		</c:forEach>
 		<fieldset>
 			<legend>Editar Produto</legend>
-			<input type="hidden" name="produto.produtoID" value="${produto.produtoID }" />
-			<label for="nome">Nome:</label> <input id="nome" type="text"
-				name="produto.nome" value="${produto.nome }" /> <label
-				for="descricao">Descrição:</label>
+			<input type="hidden" name="produto.produtoID"
+				value="${produto.produtoID}" /> <label for="nome">Nome:</label> <input
+				id="nome" type="text" name="produto.nome" value="${produto.nome}" />
+			<label for="descricao">Descrição:</label>
 			<textarea id="descricao" name="produto.descricao">
-${produto.descricao }
+${produto.descricao}
 </textarea>
 			<label for="preco">Preço:</label> <input id="preco" type="text"
-				name="produto.preco" value="${produto.preco }" />
+				name="produto.preco" value="${produto.preco}" />
 			<button type="submit">Editar</button>
 		</fieldset>
 	</form>
