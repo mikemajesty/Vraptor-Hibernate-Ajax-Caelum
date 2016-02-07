@@ -2,7 +2,7 @@ package br.com.dao;
 
 import java.util.List;
 
-import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -10,16 +10,18 @@ import org.hibernate.Transaction;
 import br.com.entities.Produto;
 import br.com.infra.SessionCreator;
 
-@RequestScoped
 
 public class ProdutoDao {
 
-	private final Session session;
+	private Session session;
 
-	public ProdutoDao() {
-		this.session = SessionCreator.getSession();
+	protected ProdutoDao() {
+		
 	}
-
+	@Inject
+	public ProdutoDao(SessionCreator sessionCreator){
+		session = sessionCreator.getSession();
+	}
 	public void salvar(Produto produto) {
 		Transaction tx = session.beginTransaction();
 		session.save(produto);
@@ -35,11 +37,9 @@ public class ProdutoDao {
 		return prodList;
 	}
 
-	public void alterar(Produto produto) {
-		
+	public void alterar(Produto produto) {	
 		
 		Transaction tx = session.beginTransaction();
-		produto.setPreco(42.50);
 		session.update(produto);
 		tx.commit();
 		
