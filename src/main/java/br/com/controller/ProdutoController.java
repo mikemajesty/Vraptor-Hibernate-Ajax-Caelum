@@ -2,14 +2,14 @@ package br.com.controller;
 
 
 import javax.inject.Inject;
-import javax.inject.Named;
-import javax.xml.ws.Action;
 
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.validator.SimpleMessage;
+import br.com.caelum.vraptor.validator.Validator;
 import br.com.dao.ProdutoDao;
 import br.com.entities.Produto;
 
@@ -18,25 +18,16 @@ public class ProdutoController {
 
 	private Result result;
 	private ProdutoDao produtoDao;
-
+    private Validator validator;
 	protected ProdutoController() {
 	}
 
 	@Inject
-	public ProdutoController(Result result, ProdutoDao produtoDao) {
+	public ProdutoController(Result result, ProdutoDao produtoDao,Validator validator) {
 
 		this.result = result;
 		this.produtoDao = produtoDao;
-
-		/*Produto produto = getProduto();
-
-		produtoDao.salvar(produto);
-
-		Produto prod = produtoDao.getProdutoBiID(1);
-		prod.setNome("Malha de cota");
-		produtoDao.alterar(prod);
-
-		produtoDao.delete(prod.getProdutoID());*/
+		this.validator = validator;
 
 	}
 
@@ -77,6 +68,20 @@ public class ProdutoController {
 	@Path("/novo")
 	@Post
 	public void cadastrar(Produto produto) {
+		//Uma forma quando se usa dataannotation
+		
+		validator.validate(produto);
+		
+		//Uma outra forma para validar, sem dataannotation
+		/*validator.addIf(produto.getNome() == null || produto.getNome() == ""
+				, new SimpleMessage("nome", "Nome é requerido"));
+		validator.addIf(produto.getPreco() == null || produto.getPreco() == 0 ,new SimpleMessage("preco","Preço não pode ser maior que zero"));
+		validator.addIf(produto.getDescricao() == "" || produto.getDescricao() == null, new SimpleMessage("descricao","Descrição é requerido"));
+		*/
+		
+		if (validator.hasErrors()) {
+			validator.onErrorForwardTo(this).cadastrar();
+		}
 		produtoDao.salvar(produto);
 		result.redirectTo(this).listar();
 	}

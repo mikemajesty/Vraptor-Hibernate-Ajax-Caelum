@@ -2,8 +2,11 @@ package br.com.entities;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
 import javax.persistence.Entity;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 public class Produto {
@@ -12,8 +15,13 @@ public class Produto {
 	@Id
 	@GeneratedValue
 	private int produtoID;
+	@NotNull
+	@Length(min=3)
 	private String nome;
+	@NotNull
+	@Length(max=10)
 	private String descricao;
+	@Min(0)
 	private Double preco;
 	
 	
