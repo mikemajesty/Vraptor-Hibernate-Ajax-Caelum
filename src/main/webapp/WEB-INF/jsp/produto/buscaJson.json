@@ -1,0 +1,14 @@
+[
+{
+	"id": 1,
+	"nome": "Sabonete",
+	"descricao": "Um sabonete com perfume de lavanda",
+	"preco": "3.53"
+},
+{
+	"id": 3,
+	"nome": "Sapato",
+	"descricao": "um sapato de couro",
+	"preco": "132.00"
+}
+]

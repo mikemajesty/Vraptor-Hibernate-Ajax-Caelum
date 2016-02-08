@@ -6,18 +6,60 @@
 </head>
 
 <body>
-	<li><a href="<c:url value="/produto/novo"/>"> Novo Produto </a></li>
-	<div id="menu">
-		<ul>
-			<li><a href="<c:url value="/produto/listar"/>">Lista
-					Produtos</a></li>
-		</ul>
+	<div id="header">
+		<div id="logo" align="left">
+			<img src="http://postimg.org/image/h0hv72ogh/" />
+		</div>
+
+		<div id="usuario" align="center">
+			<c:if test="${usuarioWeb.logado }">
+				Olá, ${usuarioWeb.nome }!
+				<a href="<c:url value="/logout"/>">Logout</a>
+			</c:if>
+			<c:if test="${empty usuarioWeb or not usuarioWeb.logado }">
+				Você não está logado. 
+				<a href="<c:url value="/login"/>">Login</a>
+				<a href="<c:url value="/novo"/>">Cadastre-se</a>
+			</c:if>
+		</div>
+
+		<div id="carrinho">
+			<h3>
+				<a href="<c:url value="/carrinho"/>">Meu carrinho:</a>
+			</h3>
+			<c:if test="${empty carrinho or carrinho.totalDeItens eq 0 }">
+				<span>Você não possui itens no seu carrinho</span>
+			</c:if>
+			<c:if test="${carrinho.totalDeItens > 0 }">
+				<ul>
+					<li><strong>Itens:</strong> ${carrinho.totalDeItens }</li>
+					<li><strong>Total:</strong> <fmt:formatNumber type="currency"
+							value="${carrinho.total }" /></li>
+				</ul>
+			</c:if>
+		</div>
+
 	</div>
 	<div id="erros">
 		<ul>
-			<c:forEach items="${errors}" var="error">
-				<li>${error.category }- ${error.message }</li>
+			<c:forEach items="${errors }" var="error">
+				<li>${error.category }-${error.message }</li>
 			</c:forEach>
 		</ul>
 	</div>
+	<div id="body"></div>
+		<div id="menu">
+			<ul>
+				<c:if test="${usuarioWeb.logado }">
+					<li><a href="<c:url value='/novo'/>"> Novo Produto</a></li>
+				</c:if>
+				<li><a href="<c:url value='/'/>">Lista Produtos</a></li>
+				<li>
+					<form action="<c:url value='/busca'/>">
+						<input id="busca" name="nome" />
+					</form>
+				</li>
+			</ul>
+		</div>
+		<div id="content"></div>
 </body>

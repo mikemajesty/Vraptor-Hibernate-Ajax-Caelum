@@ -1,16 +1,20 @@
 package br.com.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
+
+
+import com.google.gson.JsonElement;
 
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
-import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
-import br.com.caelum.vraptor.validator.SimpleMessage;
 import br.com.caelum.vraptor.validator.Validator;
 import br.com.dao.ProdutoDao;
 import br.com.entities.Produto;
+import static br.com.caelum.vraptor.view.Results.*;
 
 @Controller
 public class ProdutoController {
@@ -119,5 +123,18 @@ public class ProdutoController {
 	@Get("/detalhes-{id}")
 	public Produto detalhes(int id) {
 		return produtoDao.getProdutoBiID(id);
+	}
+
+	@Get("/busca")
+	public List<Produto> busca(String nome) {
+		result.include("nome", nome);
+		return produtoDao.findByName(nome);
+
+	}
+
+	@Get("/buscajson")
+	public void buscaJson(String nome) {
+		result.use(json()).withoutRoot().from(produtoDao.findByName(nome))
+				.exclude("produtoID", "descricao").serialize();
 	}
 }

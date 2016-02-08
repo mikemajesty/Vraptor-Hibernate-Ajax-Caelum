@@ -6,6 +6,8 @@ import javax.inject.Inject;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Restrictions;
 
 import br.com.entities.Produto;
 import br.com.infra.SessionCreator;
@@ -52,5 +54,8 @@ public class ProdutoDao {
 		session.delete(produto);
 		tx.commit();
 		
+	}
+	public List<Produto> findByName(String name) {
+		return session.createCriteria(Produto.class).add(Restrictions.ilike("nome", MatchMode.ANYWHERE)).list();		
 	}
 }
