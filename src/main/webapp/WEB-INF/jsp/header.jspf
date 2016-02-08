@@ -25,7 +25,7 @@
 
 		<div id="carrinho">
 			<h3>
-				<a href="<c:url value="/carrinho"/>">Meu carrinho:</a>
+				<a href="<c:url value="/car/visualiza"/>">Meu carrinho:</a>
 			</h3>
 			<c:if test="${empty carrinho or carrinho.totalDeItens eq 0 }">
 				<span>Você não possui itens no seu carrinho</span>

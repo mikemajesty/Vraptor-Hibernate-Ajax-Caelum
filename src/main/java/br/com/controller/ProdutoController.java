@@ -132,7 +132,7 @@ public class ProdutoController {
 
 	}
 
-	@Get("/buscajson")
+	@Get("/buscaJson")
 	public void buscaJson(String nome) {
 		result.use(json()).withoutRoot().from(produtoDao.findByName(nome))
 				.exclude("produtoID", "descricao").serialize();
