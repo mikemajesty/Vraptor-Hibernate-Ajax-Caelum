@@ -26,6 +26,15 @@ ${produto.descricao}
 				name="produto.preco" value="${produto.preco}" />
 			<button type="submit">Editar</button>
 		</fieldset>
+
+	</form>
+	<form action="<c:url value="/imagen/${produto.id }/imagem"/>"
+		method="POST" enctype="multipart/form-data">
+		<fieldset>
+			<legend>Upload de Imagem</legend>
+			<input type="file" name="imagem" />
+			<button type="submit">Enviar</button>
+		</fieldset>
 	</form>
 </body>
 </html>
