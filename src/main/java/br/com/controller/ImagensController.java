@@ -1,7 +1,10 @@
 package br.com.controller;
 
+import java.io.File;
+
 import javax.inject.Inject;
 
+import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.observer.upload.UploadedFile;
@@ -13,14 +16,15 @@ import br.com.entities.Produto;
 public class ImagensController {
 
 	private Validator validator;
-    private Result result;
-    private Imagens imagens;
+	private Result result;
+	private Imagens imagens;
+
 	protected ImagensController() {
 
 	}
 
 	@Inject
-	public ImagensController(Validator validator,Result result,Imagens imagens) {
+	public ImagensController(Validator validator, Result result, Imagens imagens) {
 		this.validator = validator;
 		this.result = result;
 		this.imagens = imagens;
@@ -32,10 +36,15 @@ public class ImagensController {
 				new SimpleMessage("imagen", "imagem nula"));
 		validator.onErrorRedirectTo(ProdutoController.class).editar(
 				produto.getProdutoID());
-		
+
 		imagens.salva(imagem, produto);
-		result.redirectTo(ProdutoController.class)
-		.editar(produto.getProdutoID());
-		
+		result.redirectTo(ProdutoController.class).editar(
+				produto.getProdutoID());
+
+	}
+
+	@Get("/produtos/{produto.id}/imagem")
+	public File download(Produto produto) {
+		return imagens.mostra(produto);
 	}
 }

@@ -16,7 +16,7 @@ public class Imagens {
 	public Imagens(ServletContext context) {
 		String caminhoImagens = context.getRealPath("/WEB-INF/imagens");
 		pastaImagens = new File(caminhoImagens);
-		pastaImagens.mkdir();
+		pastaImagens.mkdir(); 
 	} 
 
 	public void salva(UploadedFile imagem, Produto produto) {
