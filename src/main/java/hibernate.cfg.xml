@@ -14,6 +14,6 @@
 		<!--<property name="hibernate.hbm2ddl.auto">create</property>  --> 
 
 		<mapping class="br.com.entities.Produto"></mapping>
-
+		<mapping class="br.com.entities.Usuario"></mapping>
 	</session-factory>
 </hibernate-configuration>

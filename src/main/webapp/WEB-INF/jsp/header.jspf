@@ -14,12 +14,12 @@
 		<div id="usuario" align="center">
 			<c:if test="${usuarioWeb.logado }">
 				Olá, ${usuarioWeb.nome }!
-				<a href="<c:url value="/logout"/>">Logout</a>
+				<a href="<c:url value="./usuario/logout"/>">Logout</a>
 			</c:if>
 			<c:if test="${empty usuarioWeb or not usuarioWeb.logado }">
 				Você não está logado. 
-				<a href="<c:url value="/login"/>">Login</a>
-				<a href="<c:url value="/novo"/>">Cadastre-se</a>
+				<a href="<c:url value="usuario/login"/>">Login</a>
+				<a href="<c:url value="usuario/novo"/>">Cadastre-se</a>
 			</c:if>
 		</div>
 

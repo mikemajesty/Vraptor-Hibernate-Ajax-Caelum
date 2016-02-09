@@ -1,11 +1,15 @@
 package br.com.controller;
 
+import static br.com.caelum.vraptor.view.Results.json;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 
 import javax.inject.Inject;
 
-
-import com.google.gson.JsonElement;
+import org.hibernate.annotations.Target;
+import org.hibernate.validator.internal.xml.ElementType;
 
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
@@ -14,7 +18,6 @@ import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.Validator;
 import br.com.dao.ProdutoDao;
 import br.com.entities.Produto;
-import static br.com.caelum.vraptor.view.Results.*;
 
 @Controller
 public class ProdutoController {
@@ -65,11 +68,13 @@ public class ProdutoController {
 	}
 
 	@Get("/novo")
+	@Restrito
 	public void cadastrar() {
 
 	}
 
 	@Post("/novo")
+	@Restrito
 	public void cadastrar(Produto produto) {
 		// Uma forma quando se usa dataannotation
 
@@ -94,12 +99,14 @@ public class ProdutoController {
 	}
 
 	@Get("/editar-{id}")
+	@Restrito
 	public Produto editar(int id) {
 		return produtoDao.getProdutoBiID(id);
 
 	}
 
 	@Post("/editar")
+	@Restrito
 	public void editar(Produto produto) {
 		validator.validate(produto);
 		validator.onErrorForwardTo(this).editar(produto.getProdutoID());
@@ -108,12 +115,14 @@ public class ProdutoController {
 	}
 
 	@Get("/deletar-{id}")
+	@Restrito
 	public Produto deletar(int id) {
 		return produtoDao.getProdutoBiID(id);
 
 	}
 
 	@Post("/confirmar")
+	@Restrito
 	public void confirmar(int id) {
 		produtoDao.delete(produtoDao.getProdutoBiID(id).getProdutoID());
 		result.redirectTo(this).listar();
@@ -121,6 +130,7 @@ public class ProdutoController {
 	}
 
 	@Get("/detalhes-{id}")
+	@Restrito
 	public Produto detalhes(int id) {
 		return produtoDao.getProdutoBiID(id);
 	}
@@ -136,5 +146,10 @@ public class ProdutoController {
 	public void buscaJson(String nome) {
 		result.use(json()).withoutRoot().from(produtoDao.findByName(nome))
 				.exclude("produtoID", "descricao").serialize();
+	}
+
+	@Retention(RetentionPolicy.RUNTIME)
+	@java.lang.annotation.Target(java.lang.annotation.ElementType.METHOD)
+	public @interface Restrito {
 	}
 }

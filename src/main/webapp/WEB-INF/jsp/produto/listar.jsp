@@ -37,9 +37,12 @@
 					<td>${produto.nome }</td>
 					<td>${produto.descricao }</td>
 					<td>${produto.preco }</td>
-					<td><a href="editar-${produto.produtoID}">Editar</a></td>
-					<td><a href="deletar-${produto.produtoID}">Deletar</a></td>
-					<td><a href="detalhes-${produto.produtoID}">Detalhes</a></td>
+					<c:if test="${usuarioWeb.logado }">
+						<td><a href="editar-${produto.produtoID}">Editar</a></td>
+						<td><a href="deletar-${produto.produtoID}">Deletar</a></td>
+						<td><a href="detalhes-${produto.produtoID}">Detalhes</a></td>
+					</c:if>
+
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -48,7 +51,6 @@
 </body>
 <script type="text/javascript">
 	debugger;
-
 
 	var data = $.get("./buscajson").html();
 	debugger;
